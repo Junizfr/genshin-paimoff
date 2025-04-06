@@ -46,16 +46,11 @@ export default {
     }
   },
 
-  create: async (user) => {
+  create: async ({ username, email, password, avatar }) => {
     try {
       const stmt = await connection.run(
         'INSERT INTO users (username, email, password, avatar) VALUES (?, ?, ?, ?);',
-        [
-          user.username,
-          user.email,
-          await bcrypt.hash(user.password, 10),
-          user.avatar,
-        ]
+        [username, email, await bcrypt.hash(password, 10), avatar]
       );
       if (stmt.error) return { errors: stmt.error };
       const createdUser = await connection.get(
@@ -68,16 +63,16 @@ export default {
     }
   },
 
-  update: async (user) => {
+  update: async ({ id, username, email, password, avatar }) => {
     try {
       const stmt = await connection.run(
         'UPDATE users SET username = ?, email = ?, password = ?, avatar = ? WHERE id = ?;',
-        [user.username, user.email, user.password, user.avatar, user.id]
+        [username, email, password, avatar, id]
       );
       if (stmt.error) return { errors: stmt.error };
       const updatedUser = await connection.get(
         'SELECT * FROM users WHERE id = ?;',
-        [user.id]
+        [id]
       );
       return updatedUser;
     } catch (error) {
