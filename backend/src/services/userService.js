@@ -33,7 +33,7 @@ export default {
     const newUser = new User(userData);
     return {
       success: 'User created',
-      user: await userRepository.create(newUser),
+      data: await userRepository.create(newUser),
     };
   },
 
@@ -53,6 +53,7 @@ export default {
       email: updatableRows.email || user.email,
       password: updatableRows.password || user.password,
       avatar: updatableRows.avatar || user.avatar,
+      role: updatableRows.role || user.role,
       updatedAt: new Date(),
     });
 
@@ -67,7 +68,7 @@ export default {
     await userRepository.delete(userId);
     return {
       success: 'User deleted',
-      user,
+      data: user,
     };
   },
 

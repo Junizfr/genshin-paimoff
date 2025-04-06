@@ -2,11 +2,12 @@ import userRepository from '../repositories/userRepository.js';
 
 export default class User {
   constructor(data) {
-    this.id = data.id || 0;
+    this.id = data.id || null;
     this.username = data.username;
     this.email = data.email;
     this.password = data.password;
     this.avatar = data.avatar || 'none.png';
+    this.role = data.role || 1;
 
     this.createdAt = data.createdAt || null;
     this.updatedAt = data.updatedAt || new Date();
@@ -43,6 +44,13 @@ export default class User {
           } else {
             updatableRows.username = data.username;
           }
+        }
+      }
+      if (data.role) {
+        if (data.role < 1 || data.role > 2) {
+          errors.role = 'Le rôle doit avoir une valeur comprise entre 1 et 2.';
+        } else {
+          updatableRows.role = data.role;
         }
       }
       return {
