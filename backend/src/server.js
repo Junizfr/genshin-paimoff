@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import router from './routes.js';
+import database from './database.js';
 
 dotenv.config();
 
@@ -13,4 +14,10 @@ app.use('/', router);
 
 app.listen(SERVER_PORT, SERVER_HOST, () => {
   console.log(`Server is running on http://${SERVER_HOST}:${SERVER_PORT}`);
+});
+
+process.on('SIGINT', async () => {
+  console.log('Shutting down server...');
+  await database.close();
+  process.exit();
 });
