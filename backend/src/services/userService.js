@@ -1,7 +1,25 @@
 import userRepository from '../repositories/userRepository.js';
 import User from '../models/user.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 export default {
+  login: async (body) => {
+    const { email, password } = body;
+    if (email === undefined || password === undefined) {
+      return { error: 'Email and password are required' };
+    }
+    const user = await userRepository.findByEmail(email);
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+        expiresIn: '1h',
+      });
+      return { token };
+    } else {
+      return { error: 'Invalid credentials' };
+    }
+  },
+
   getAll: async () => {
     return await userRepository.all();
   },
@@ -13,7 +31,10 @@ export default {
     }
 
     const newUser = new User(userData);
-    return await userRepository.create(newUser);
+    return {
+      success: 'User created',
+      user: await userRepository.create(newUser),
+    };
   },
 
   update: async (userId, userData) => {
@@ -39,6 +60,22 @@ export default {
   },
 
   delete: async (userId) => {
-    return await userRepository.delete(userId);
+    const user = await userRepository.findById(userId);
+    if (!user) {
+      return { error: 'User not found' };
+    }
+    await userRepository.delete(userId);
+    return {
+      success: 'User deleted',
+      user,
+    };
+  },
+
+  me: async (userId) => {
+    const user = await userRepository.findById(userId);
+    if (!user) {
+      return { error: 'User not found' };
+    }
+    return user;
   },
 };

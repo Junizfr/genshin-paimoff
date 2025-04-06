@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { connection } from '../database.js';
 
 export default {
@@ -49,7 +50,12 @@ export default {
     try {
       const stmt = await connection.run(
         'INSERT INTO users (username, email, password, avatar) VALUES (?, ?, ?, ?);',
-        [user.username, user.email, user.password, user.avatar]
+        [
+          user.username,
+          user.email,
+          await bcrypt.hash(user.password, 10),
+          user.avatar,
+        ]
       );
       if (stmt.error) return { errors: stmt.error };
       const createdUser = await connection.get(

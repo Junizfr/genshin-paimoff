@@ -9,7 +9,7 @@ export default class User {
     this.avatar = data.avatar || 'none.png';
 
     this.createdAt = data.createdAt || null;
-    this.updatedAt = data.updatedAt || null;
+    this.updatedAt = data.updatedAt || new Date();
     this.error = null;
   }
 
