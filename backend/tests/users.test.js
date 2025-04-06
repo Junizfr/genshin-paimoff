@@ -1,11 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import userService from '../src/services/userService.js';
 
-const testUser = {
-  username: 'test',
-  email: 'RZB2O@example.com',
-  password: 'test',
-};
+const testUser = {};
 
 describe('User Service', () => {
   it('should create a user', async () => {
