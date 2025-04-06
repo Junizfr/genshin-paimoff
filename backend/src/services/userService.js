@@ -53,6 +53,7 @@ export default {
       email: updatableRows.email || user.email,
       password: updatableRows.password || user.password,
       avatar: updatableRows.avatar || user.avatar,
+      role: updatableRows.role || user.role,
       updatedAt: new Date(),
     });
 

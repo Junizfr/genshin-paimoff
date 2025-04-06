@@ -68,8 +68,15 @@ export default {
 
   delete: async (id) => {
     try {
-      await connection.run('DELETE FROM roles WHERE id = ?;', [id]);
-      return { deleted: true };
+      const result = await connection.run('DELETE FROM roles WHERE id = ?;', [
+        id,
+      ]);
+
+      if (result.changes > 0) {
+        return { success: true };
+      }
+
+      return { errors: 'Role not found' };
     } catch (error) {
       return { errors: error.message };
     }

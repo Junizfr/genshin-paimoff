@@ -44,11 +44,8 @@ export default {
     if (!role) {
       return { error: 'Role not found' };
     }
-    await roleRepository.delete(roleId);
-    return {
-      success: 'Role deleted',
-      data: role,
-    };
+    const deleteRole = await roleRepository.delete(roleId);
+    return deleteRole;
   },
 
   getById: async (roleId) => {
