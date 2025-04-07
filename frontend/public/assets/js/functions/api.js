@@ -17,4 +17,29 @@ export default {
     const result = await response.json();
     return result;
   },
+
+  put: async (url, data) => {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    return result;
+  },
+
+  delete: async (url) => {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'same-origin',
+    });
+    const result = await response.json();
+    return result;
+  },
 };
