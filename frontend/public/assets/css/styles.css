@@ -230,3 +230,23 @@ nav {
         transform: rotate(-45deg) translate(6px, -6px);
     }
 }
+
+/* --- Alerts --- */
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-success {
+    background: rgba(22, 163, 74, 0.1);
+    color: #22c55e;
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}

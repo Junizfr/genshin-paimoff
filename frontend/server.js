@@ -12,6 +12,8 @@ const contentTypes = {
 };
 
 const server = http.createServer((req, res) => {
+  const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
+  const pathname = parsedUrl.pathname;
   const cookies = Object.fromEntries(
     (req.headers.cookie || '')
       .split(';')
@@ -19,7 +21,7 @@ const server = http.createServer((req, res) => {
       .map((cookie) => cookie.trim().split('=').map(decodeURIComponent))
   );
 
-  if (req.method === 'POST' && req.url === '/') {
+  if (req.method === 'POST' && pathname === '/') {
     let body = '';
     req.on('data', (chunk) => (body += chunk));
 
@@ -29,6 +31,7 @@ const server = http.createServer((req, res) => {
       params.forEach((value, key) => {
         bodyObj[key] = value;
       });
+
       fetch('http://localhost:3000/login', {
         method: 'POST',
         headers: {
@@ -46,8 +49,11 @@ const server = http.createServer((req, res) => {
               });
               res.end();
             } else {
-              res.writeHead(401, { 'Content-Type': 'text/html' });
-              res.end('<h1>Échec de connexion</h1>');
+              const errorMessage = 'Login failed';
+              res.writeHead(302, {
+                Location: `/?error=${encodeURIComponent(errorMessage)}`,
+              });
+              res.end();
             }
           });
         })
@@ -57,7 +63,7 @@ const server = http.createServer((req, res) => {
           res.end('Erreur de communication avec l’API');
         });
     });
-  } else if (req.url === '/dashboard') {
+  } else if (pathname === '/dashboard') {
     if (cookies.token) {
       const filePath = path.join(
         __dirname,
@@ -82,13 +88,14 @@ const server = http.createServer((req, res) => {
   } else {
     let filePath = '';
     let contentType = '';
-    if (req.url === '/') {
+
+    if (pathname === '/') {
       filePath = path.join(__dirname, 'public', 'pages', 'login.html');
       contentType = 'text/html';
     } else {
-      const ext = path.extname(req.url);
+      const ext = path.extname(pathname);
       if (contentTypes[ext]) {
-        filePath = path.join(__dirname, 'public', req.url);
+        filePath = path.join(__dirname, 'public', pathname);
         contentType = contentTypes[ext];
       }
     }
