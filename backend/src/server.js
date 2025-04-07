@@ -12,18 +12,17 @@ const SERVER_PORT = process.env.SERVER_PORT || 3000;
 
 const app = express();
 
-app.use(express.json());
-
-app.use('/', router);
-
 app.use(cookieParser());
 app.use(
   cors({
-    origin: 'http://localhost:4000',
+    origin: '*',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   })
 );
+app.use(express.json());
+
+app.use('/', router);
 
 app.listen(SERVER_PORT, SERVER_HOST, () => {
   console.log(`Server is running on http://${SERVER_HOST}:${SERVER_PORT}`);
