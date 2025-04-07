@@ -1,1 +1,1 @@
-console.log('main.js loaded');
+import './components/navbar.js';

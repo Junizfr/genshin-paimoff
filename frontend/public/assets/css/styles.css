@@ -1,3 +1,232 @@
+/* --- Déclarations des variables de couleurs --- */
+:root {
+    --primary: #8b5cf6;
+    --primary-dark: #7c3aed;
+    --primary-light: #a78bfa;
+    --border: #404040;
+    --background: #0c0a0f;
+    --text: #e2e8f0;
+    --surface: #1a1625;
+}
+
+/* --- Réinitialisation des styles par défaut --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+/* --- Style général du corps de la page --- */
 body {
-    background-color: red;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    height: 100vh;
+}
+
+/* --- Conteneur principal --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* --- Formulaire et champs de saisie --- */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-input {
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--background);
+    color: var(--text);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* --- Cartes de contenu --- */
+.card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Boutons --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* --- Formulaire de connexion --- */
+button[type="submit"] {
+    border: none;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+}
+
+/* --- Media queries --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+/* --- Formulaire de connexion --- */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* --- Navigation (Navbar) --- */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(12, 10, 15, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 80px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-link {
+    text-align: center;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-link.active {
+    color: var(--primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.nav-link.active:hover {
+    color: var(--primary-light);
+}
+
+.nav-link:hover {
+    color: var(--primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+/* --- Menu Burger (Mobile) --- */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.burger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text);
+    transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    .burger-menu {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background: var(--surface);
+        flex-direction: column;
+        padding: 80px 2rem 2rem;
+        transform: translateX(100%);
+        z-index: 100;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        transform: translateX(0);
+    }
+
+    /* Animation du burger */
+    .burger-menu.active .burger-bar:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .burger-menu.active .burger-bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .burger-menu.active .burger-bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
 }
