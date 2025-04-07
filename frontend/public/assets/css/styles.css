@@ -523,3 +523,16 @@ form {
         padding: 0.8rem;
     }
 }
+
+.pages-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.page-actions {   
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+}
