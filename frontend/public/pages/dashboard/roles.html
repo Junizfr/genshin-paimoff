@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Genshin-Impact Paimoff | Roles</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+    
+    <nav>
+        <div class="container nav-container">
+            <div class="burger-menu">
+                <div class="burger-bar"></div>
+                <div class="burger-bar"></div>
+                <div class="burger-bar"></div>
+            </div>
+            <div class="nav-links">
+                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/dashboard/roles" class="nav-link active">Roles</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="section-table">
+        <div class="container">
+
+            <h1>Liste des rôles</h1>
+            
+            <div id="alert-container"></div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="roles-body">
+                    <tr class="table-loader-row">
+                        <td colspan="3">
+                            <div class="table-loader-wrapper">
+                                <span class="table-loader"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    
+    <script src="/assets/js/main.js" type="module"></script>
+</body>
+</html>

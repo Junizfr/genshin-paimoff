@@ -1,6 +1,9 @@
-//import './components/navbar.js';
+import './components/navbar.js';
+
+import './pages/roles.js';
 
 import { showAlert } from './components/alert.js';
+import { loadCurrentView } from './initView.js';
 
 const showErrors = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -11,3 +14,7 @@ const showErrors = () => {
 };
 
 showErrors();
+
+setTimeout(async () => {
+  await loadCurrentView();
+}, 1500);

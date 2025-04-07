@@ -11,9 +11,18 @@ const contentTypes = {
   '.js': 'application/javascript',
 };
 
+const htmlRoutes = {
+  '/': 'pages/login.html',
+  '/dashboard': 'pages/dashboard/dashboard.html',
+  '/dashboard/roles': 'pages/dashboard/roles.html',
+  '/dashboard/roles/new': 'pages/dashboard/roles_new.html',
+  '/dashboard/roles/edit': 'pages/dashboard/roles_edit.html',
+};
+
 const server = http.createServer((req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
   const pathname = parsedUrl.pathname;
+
   const cookies = Object.fromEntries(
     (req.headers.cookie || '')
       .split(';')
@@ -24,7 +33,6 @@ const server = http.createServer((req, res) => {
   if (req.method === 'POST' && pathname === '/') {
     let body = '';
     req.on('data', (chunk) => (body += chunk));
-
     req.on('end', () => {
       const params = new URLSearchParams(body);
       const bodyObj = {};
@@ -63,46 +71,39 @@ const server = http.createServer((req, res) => {
           res.end('Erreur de communication avec l’API');
         });
     });
-  } else if (pathname === '/dashboard') {
-    if (cookies.token) {
-      const filePath = path.join(
-        __dirname,
-        'public',
-        'pages',
-        'dashboard',
-        'dashboard.html'
-      );
-      fs.readFile(filePath, (err, content) => {
-        if (err) {
-          res.writeHead(500);
-          res.end('Erreur serveur');
-        } else {
-          res.writeHead(200, { 'Content-Type': 'text/html' });
-          res.end(content);
-        }
-      });
-    } else {
+  } else if (htmlRoutes[pathname]) {
+    if (pathname.startsWith('/dashboard') && !cookies.token) {
       res.writeHead(302, { Location: '/' });
       res.end();
+      return;
     }
-  } else {
-    let filePath = '';
-    let contentType = '';
 
-    if (pathname === '/') {
-      filePath = path.join(__dirname, 'public', 'pages', 'login.html');
-      contentType = 'text/html';
-    } else {
-      const ext = path.extname(pathname);
-      if (contentTypes[ext]) {
-        filePath = path.join(__dirname, 'public', pathname);
-        contentType = contentTypes[ext];
-      }
-    }
+    const filePath = path.join(__dirname, 'public', htmlRoutes[pathname]);
+    const contentType = 'text/html';
 
     fs.readFile(filePath, (err, content) => {
       if (err) {
-        if (err.code === 'ENOENT') {
+        const notFoundPath = path.join(
+          __dirname,
+          'public',
+          'pages',
+          '404.html'
+        );
+        fs.readFile(notFoundPath, (err404, notFoundContent) => {
+          res.writeHead(404, { 'Content-Type': 'text/html' });
+          res.end(notFoundContent || '404 - Page not found');
+        });
+      } else {
+        res.writeHead(200, { 'Content-Type': contentType });
+        res.end(content);
+      }
+    });
+  } else {
+    const ext = path.extname(pathname);
+    if (contentTypes[ext]) {
+      const assetPath = path.join(__dirname, 'public', pathname);
+      fs.readFile(assetPath, (err, content) => {
+        if (err) {
           const notFoundPath = path.join(
             __dirname,
             'public',
@@ -114,14 +115,17 @@ const server = http.createServer((req, res) => {
             res.end(notFoundContent || '404 - Page not found');
           });
         } else {
-          res.writeHead(500);
-          res.end(`Erreur serveur : ${err.code}`);
+          res.writeHead(200, { 'Content-Type': contentTypes[ext] });
+          res.end(content);
         }
-      } else {
-        res.writeHead(200, { 'Content-Type': contentType });
-        res.end(content);
-      }
-    });
+      });
+    } else {
+      const notFoundPath = path.join(__dirname, 'public', 'pages', '404.html');
+      fs.readFile(notFoundPath, (err404, notFoundContent) => {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end(notFoundContent || '404 - Page not found');
+      });
+    }
   }
 });
 

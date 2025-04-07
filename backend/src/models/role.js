@@ -34,12 +34,7 @@ export default class Role {
           errors.icon =
             "L'icône du rôle doit contenir entre 3 et 50 caractères.";
         } else {
-          const existingRole = await roleRepository.findByIcon(data.icon);
-          if (existingRole) {
-            errors.icon = 'Cet icône de rôle est déjà utilisé.';
-          } else {
-            updatableRows.icon = data.icon;
-          }
+          updatableRows.icon = data.icon;
         }
       }
       return {
