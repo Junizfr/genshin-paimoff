@@ -26,6 +26,10 @@ if (document.URL.includes('/roles/new')) {
 }
 
 if (document.URL.endsWith('dashboard/roles')) {
+  const newRoleButton = document.getElementById('newRoleButton');
+  newRoleButton.addEventListener('click', async () => {
+    window.location.href = `/dashboard/roles/new`;
+  });
   setTimeout(() => {
     const editButtons = document.querySelectorAll('.edit');
     const deleteButtons = document.querySelectorAll('.delete');
