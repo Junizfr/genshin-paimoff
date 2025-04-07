@@ -3,6 +3,14 @@ import userService from '../services/userService.js';
 export default {
   login: async (req, res) => {
     const user = await userService.login(req.body);
+    if (user.token) {
+      res.cookie('token', user.token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'Lax',
+        maxAge: 3600000,
+      });
+    }
     res.status(user.error ? 400 : 200).json(user);
   },
 
