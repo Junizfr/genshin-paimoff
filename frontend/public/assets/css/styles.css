@@ -1,3 +1,538 @@
+/* === Variables globales === */
+:root {
+    --primary: #8b5cf6;
+    --primary-dark: #7c3aed;
+    --primary-light: #a78bfa;
+    --border: #404040;
+    --background: #0c0a0f;
+    --text: #e2e8f0;
+    --surface: #1a1625;
+}
+
+/* === Réinitialisation & base === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: red;
+    background-color: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+    height: 100vh;
+}
+
+/* === Conteneur global === */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 1rem;
+    margin: 0 auto;
+}
+
+/* === Inputs === */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-input {
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--background);
+    color: var(--text);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* === Boutons === */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* === Formulaire de connexion === */
+.login-container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+button[type="submit"] {
+    border: none;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end;
+}
+
+/* === Alertes === */
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-success {
+    background: rgba(22, 163, 74, 0.1);
+    color: #22c55e;
+}
+
+.alert-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+/* === Cartes === */
+.card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* === Navigation === */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(12, 10, 15, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 80px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-link {
+    text-align: center;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-link.active {
+    color: var(--primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.nav-link.active:hover {
+    color: var(--primary-light);
+}
+
+.nav-link:hover {
+    color: var(--primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+/* === Menu burger === */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.burger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--text);
+    transition: all 0.3s ease-in-out;
+}
+
+/* === Tableaux === */
+.section-table {
+    min-height: 100vh;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    margin-top: 6rem;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: collapse;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 2rem 0;
+    background: var(--surface);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+thead {
+    background: rgba(139, 92, 246, 0.1);
+}
+
+th {
+    color: var(--primary);
+    font-weight: 600;
+    text-align: center;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+tbody tr {
+    transition: all 0.2s ease;
+}
+
+tbody tr:hover {
+    background: rgba(139, 92, 246, 0.05);
+}
+
+td {
+    padding: 1rem 1.5rem;
+    color: var(--text);
+    border-bottom: 1px solid rgba(64, 64, 64, 0.2);
+    text-align: center;
+}
+
+td.actions-cell {
+    text-align: right;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+    background: rgba(26, 22, 37, 0.6);
+}
+
+.table-action {
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.table-action:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* === Icônes d'action === */
+.action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 0.5rem;
+    position: relative;
+}
+
+.action-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 2;
+    transition: all 0.2s ease;
+}
+
+.action-icon:hover {
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.action-icon:hover svg {
+    stroke: var(--primary);
+}
+
+/* === Tooltips === */
+.action-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: var(--surface);
+    color: var(--text);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.action-icon:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    bottom: -35px;
+}
+
+.action-icon.edit:hover svg { stroke: #3b82f6; }
+.action-icon.delete:hover svg { stroke: #ef4444; }
+.action-icon.view:hover svg { stroke: #10b981; }
+
+/* === Sections === */
+.section {
+    position: relative;
+    padding: 120px 0;
+    width: 100%;
+}
+
+/* === Media Queries === */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    th, td {
+        padding: 0.8rem 1rem;
+    }
+    
+    .burger-menu {
+        display: flex;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background: var(--surface);
+        flex-direction: column;
+        padding: 80px 2rem 2rem;
+        transform: translateX(100%);
+        z-index: 100;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-links.active {
+        transform: translateX(0);
+    }
+    
+    .burger-menu.active .burger-bar:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+    
+    .burger-menu.active .burger-bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .burger-menu.active .burger-bar:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+}
+
+/* === Loader === */
+.table-loader-row td {
+    padding: 32px 0; /* espace vertical */
+    text-align: center;
+}
+
+.table-loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-loader {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color: #444 #444 transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.table-loader::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    border: 3px solid;
+    border-color: transparent #888 #888;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    animation: rotationBack 0.5s linear infinite;
+    transform-origin: center center;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotationBack {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+/* === Forms === */
+.section-form {
+    padding: 120px 0;
+}
+
+select {
+    padding: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--background);
+    color: var(--text);
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='none' stroke='%23e2e8f0' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    /* Centrer le formulaire */
+    .section-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Prendre toute la hauteur de l'écran */
+        padding: 0 1rem; /* Ajouter un peu d'espace sur les côtés */
+    }
+
+    .section-form form {
+        width: 100%;
+        max-width: 500px; /* Limiter la largeur du formulaire pour qu'il ne prenne pas toute la largeur */
+        padding: 1.5rem;
+        justify-content: center;
+        background-color: var(--background); /* Optionnel, juste pour donner un fond à l'intérieur */
+        border-radius: 8px; /* Arrondir légèrement les bords */
+    }
+
+    /* Réduire la taille du titre du formulaire */
+    .section-form h1 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 1.2rem;
+    }
+
+    /* Ajuster la largeur du formulaire pour les petits écrans */
+    .form-group {
+        gap: 0.4rem;
+    }
+
+    /* Ajuster la taille des champs de saisie */
+    .form-input {
+        padding: 0.8rem;
+    }
+}
+
+.pages-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.page-actions {   
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
 }
