@@ -61,14 +61,34 @@ if (document.URL.includes('/roles/edit')) {
 
   document.getElementById('name').value = role.name;
 
+  const select = document.getElementById('iconSelect');
+  const icons = ['user.png', 'admin.png'];
+  icons.forEach((icon) => {
+    const option = document.createElement('option');
+    option.value = icon === 'user.png' ? 'user' : 'admin';
+    option.textContent = icon === 'user.png' ? 'Utilisateur' : 'Administrateur';
+    if (icon === role.icon) {
+      option.selected = true;
+    }
+    select.appendChild(option);
+  });
+
   editRoleForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const formData = new FormData(editRoleForm);
     const data = Object.fromEntries(formData.entries());
+    const body = {};
+
+    if (role.name !== data.name) {
+      body.name = data.name;
+    }
+    if (role.icon !== data.icon) {
+      body.icon = data.icon;
+    }
 
     const response = await api.put(
       `http://localhost:3000/roles/${role.id}`,
-      data
+      body
     );
 
     if (response.errors) {

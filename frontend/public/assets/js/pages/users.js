@@ -95,8 +95,6 @@ if (document.URL.includes('/users/edit')) {
       body.role = data.role;
     }
 
-    console.log(body);
-
     const response = await api.put(
       `http://localhost:3000/users/${user.id}`,
       body
