@@ -63,10 +63,23 @@ if (document.URL.includes('/users/edit')) {
   document.getElementById('username').value = user.username;
   document.getElementById('email').value = user.email;
 
+  const select = document.getElementById('roleSelect');
+  const response = await api.get('http://localhost:3000/roles');
+  response.roles.forEach((role) => {
+    const option = document.createElement('option');
+    option.value = role.id;
+    option.textContent = role.name;
+    if (user.role.id === role.id) {
+      option.selected = true;
+    }
+    select.appendChild(option);
+  });
+
   userFormEdit.addEventListener('submit', async (event) => {
     event.preventDefault();
     const formData = new FormData(userFormEdit);
     const data = Object.fromEntries(formData.entries());
+
     const body = {};
 
     if (user.username !== data.username) {
@@ -78,6 +91,11 @@ if (document.URL.includes('/users/edit')) {
     if (data.password) {
       body.password = data.password;
     }
+    if (data.role !== user.role.id) {
+      body.role = data.role;
+    }
+
+    console.log(body);
 
     const response = await api.put(
       `http://localhost:3000/users/${user.id}`,
