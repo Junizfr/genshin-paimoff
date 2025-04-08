@@ -1,6 +1,7 @@
 import './components/navbar.js';
 
 import './pages/roles.js';
+import './pages/users.js';
 
 import { showAlert } from './components/alert.js';
 import { loadCurrentView } from './initView.js';

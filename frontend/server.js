@@ -13,6 +13,7 @@ const contentTypes = {
 
 const htmlRoutes = {
   '/': 'pages/login.html',
+  '/register': 'pages/register.html',
   '/dashboard': 'pages/dashboard/dashboard.html',
   '/dashboard/roles': 'pages/dashboard/roles.html',
   '/dashboard/roles/new': 'pages/dashboard/roles_new.html',
