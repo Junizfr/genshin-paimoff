@@ -1,7 +1,7 @@
 import { showAlert } from '../components/alert.js';
 import api from '../functions/api.js';
 import storage from '../functions/storage.js';
-import { one } from '../models/role.js';
+import { oneRole } from '../models/role.js';
 
 const newRoleForm = document.getElementById('roleFormNew');
 
@@ -35,7 +35,7 @@ if (document.URL.endsWith('dashboard/roles')) {
     const deleteButtons = document.querySelectorAll('.delete');
     editButtons.forEach((button) => {
       button.addEventListener('click', async () => {
-        const role = await one(button.id.replace('editRole', ''));
+        const role = await oneRole(button.id.replace('editRole', ''));
         storage.setItem('role', JSON.stringify(role));
         window.location.href = `/dashboard/roles/edit`;
       });

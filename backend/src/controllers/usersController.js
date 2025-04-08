@@ -14,6 +14,15 @@ export default {
     res.status(user.error ? 400 : 200).json(user);
   },
 
+  findById: async (req, res) => {
+    const user = await userService.findById(req.params.id);
+    if (user.error) {
+      return res.status(400).json(user);
+    }
+
+    res.status(200).json(user);
+  },
+
   me: async (req, res) => {
     const user = await userService.me(req.user.id);
     res.status(user.error ? 400 : 200).json(user);

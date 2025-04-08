@@ -15,22 +15,22 @@ export default {
     try {
       const user = await connection.get(
         `
-        SELECT 
-          users.id,
-          users.username,
-          users.email,
-          users.password,
-          users.avatar,
-          json_object(
-            'id', roles.id,
-            'name', roles.name,
-            'icon', roles.icon
-          ) AS role,
-          users.createdAt,
-          users.updatedAt
-        FROM users
-        LEFT JOIN roles ON users.role = roles.id
-        WHERE users.id = ?;
+      SELECT 
+      users.id,
+      users.username,
+      users.email,
+      users.password,
+      users.avatar,
+      json_object(
+      'id', roles.id,
+      'name', roles.name,
+      'icon', roles.icon
+      ) AS role,
+      users.createdAt,
+      users.updatedAt
+      FROM users
+      LEFT JOIN roles ON users.role = roles.id
+      WHERE users.id = ?;
       `,
         [id]
       );
@@ -49,22 +49,22 @@ export default {
     try {
       const user = await connection.get(
         `
-        SELECT 
-          users.id,
-          users.username,
-          users.email,
-          users.password,
-          users.avatar,
-          json_object(
-            'id', roles.id,
-            'name', roles.name,
-            'icon', roles.icon
-          ) AS role,
-          users.createdAt,
-          users.updatedAt
-        FROM users
-        LEFT JOIN roles ON users.role = roles.id
-        WHERE users.username = ?;
+      SELECT 
+      users.id,
+      users.username,
+      users.email,
+      users.password,
+      users.avatar,
+      json_object(
+      'id', roles.id,
+      'name', roles.name,
+      'icon', roles.icon
+      ) AS role,
+      users.createdAt,
+      users.updatedAt
+      FROM users
+      LEFT JOIN roles ON users.role = roles.id
+      WHERE users.username = ?;
       `,
         [username]
       );
@@ -83,22 +83,22 @@ export default {
     try {
       const user = await connection.get(
         `
-        SELECT 
-          users.id,
-          users.username,
-          users.email,
-          users.password,
-          users.avatar,
-          json_object(
-            'id', roles.id,
-            'name', roles.name,
-            'icon', roles.icon
-          ) AS role,
-          users.createdAt,
-          users.updatedAt
-        FROM users
-        LEFT JOIN roles ON users.role = roles.id
-        WHERE users.email = ?;
+      SELECT 
+      users.id,
+      users.username,
+      users.email,
+      users.password,
+      users.avatar,
+      json_object(
+      'id', roles.id,
+      'name', roles.name,
+      'icon', roles.icon
+      ) AS role,
+      users.createdAt,
+      users.updatedAt
+      FROM users
+      LEFT JOIN roles ON users.role = roles.id
+      WHERE users.email = ?;
       `,
         [email]
       );
@@ -132,15 +132,28 @@ export default {
 
   update: async ({ id, username, email, password, avatar, role }) => {
     try {
+      const roleCheck = await connection.get(
+        'SELECT id FROM roles WHERE id = ?',
+        [role]
+      );
+      if (!roleCheck) {
+        return {
+          errors: "Le rôle spécifié n'existe pas dans la base de données.",
+        };
+      }
+
       const stmt = await connection.run(
-        'UPDATE users SET username = ?, email = ?, password = ?, role = ?, avatar = ? WHERE id = ?;',
+        'UPDATE users SET username = ?, email = ?, password = ?, avatar = ?, role = ? WHERE id = ?;',
         [username, email, password, avatar, role, id]
       );
+
       if (stmt.error) return { errors: stmt.error };
+
       const updatedUser = await connection.get(
         'SELECT * FROM users WHERE id = ?;',
         [id]
       );
+
       return updatedUser;
     } catch (error) {
       return { errors: error.message };
