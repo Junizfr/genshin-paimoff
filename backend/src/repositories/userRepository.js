@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { connection } from '../database.js';
+import { formatDate } from '../utils/date.js';
 
 export default {
   all: async () => {
@@ -143,8 +144,8 @@ export default {
       }
 
       const stmt = await connection.run(
-        'UPDATE users SET username = ?, email = ?, password = ?, avatar = ?, role = ? WHERE id = ?;',
-        [username, email, password, avatar, role, id]
+        'UPDATE users SET username = ?, email = ?, password = ?, avatar = ?, role = ?, updatedAt = ? WHERE id = ?;',
+        [username, email, password, avatar, role, formatDate(new Date()), id]
       );
 
       if (stmt.error) return { errors: stmt.error };

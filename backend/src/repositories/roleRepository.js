@@ -1,4 +1,5 @@
 import { connection } from '../database.js';
+import { formatDate } from '../utils/date.js';
 
 export default {
   all: async () => {
@@ -52,8 +53,8 @@ export default {
   update: async ({ id, name, icon }) => {
     try {
       const stmt = await connection.run(
-        'UPDATE roles SET name = ?, icon = ? WHERE id = ?;',
-        [name, icon, id]
+        'UPDATE roles SET name = ?, icon = ?, updatedAt = ? WHERE id = ?;',
+        [name, icon, formatDate(new Date()), id]
       );
       if (stmt.error) return { errors: stmt.error };
       const updatedRole = await connection.get(
