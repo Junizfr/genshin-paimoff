@@ -38,7 +38,13 @@ export default {
   },
 
   update: async (userId, userData) => {
-    const user = new User(await userRepository.findById(userId));
+    let user = await userRepository.findById(userId);
+
+    if (!user) {
+      return { error: 'User not found' };
+    }
+
+    user = new User(user);
 
     const { valid, errors, updatableRows } = await User.validate(
       userData,
