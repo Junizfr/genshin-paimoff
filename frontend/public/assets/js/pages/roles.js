@@ -1,7 +1,7 @@
 import { showAlert } from '../components/alert.js';
 import api from '../functions/api.js';
 import storage from '../functions/storage.js';
-import { one } from '../models/role.js';
+import { oneRole } from '../models/role.js';
 
 const newRoleForm = document.getElementById('roleFormNew');
 
@@ -35,7 +35,7 @@ if (document.URL.endsWith('dashboard/roles')) {
     const deleteButtons = document.querySelectorAll('.delete');
     editButtons.forEach((button) => {
       button.addEventListener('click', async () => {
-        const role = await one(button.id.replace('editRole', ''));
+        const role = await oneRole(button.id.replace('editRole', ''));
         storage.setItem('role', JSON.stringify(role));
         window.location.href = `/dashboard/roles/edit`;
       });
@@ -61,14 +61,34 @@ if (document.URL.includes('/roles/edit')) {
 
   document.getElementById('name').value = role.name;
 
+  const select = document.getElementById('iconSelect');
+  const icons = ['user.png', 'admin.png'];
+  icons.forEach((icon) => {
+    const option = document.createElement('option');
+    option.value = icon === 'user.png' ? 'user' : 'admin';
+    option.textContent = icon === 'user.png' ? 'Utilisateur' : 'Administrateur';
+    if (icon === role.icon) {
+      option.selected = true;
+    }
+    select.appendChild(option);
+  });
+
   editRoleForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const formData = new FormData(editRoleForm);
     const data = Object.fromEntries(formData.entries());
+    const body = {};
+
+    if (role.name !== data.name) {
+      body.name = data.name;
+    }
+    if (role.icon !== data.icon) {
+      body.icon = data.icon;
+    }
 
     const response = await api.put(
       `http://localhost:3000/roles/${role.id}`,
-      data
+      body
     );
 
     if (response.errors) {

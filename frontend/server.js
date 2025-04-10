@@ -13,10 +13,14 @@ const contentTypes = {
 
 const htmlRoutes = {
   '/': 'pages/login.html',
+  '/register': 'pages/register.html',
   '/dashboard': 'pages/dashboard/dashboard.html',
   '/dashboard/roles': 'pages/dashboard/roles.html',
   '/dashboard/roles/new': 'pages/dashboard/roles_new.html',
   '/dashboard/roles/edit': 'pages/dashboard/roles_edit.html',
+  '/dashboard/users': 'pages/dashboard/users.html',
+  '/dashboard/users/new': 'pages/dashboard/users_new.html',
+  '/dashboard/users/edit': 'pages/dashboard/users_edit.html',
 };
 
 const server = http.createServer((req, res) => {

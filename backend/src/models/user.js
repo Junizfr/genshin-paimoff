@@ -1,4 +1,5 @@
 import userRepository from '../repositories/userRepository.js';
+import bcrypt from 'bcryptjs';
 
 export default class User {
   constructor(data) {
@@ -7,7 +8,7 @@ export default class User {
     this.email = data.email;
     this.password = data.password;
     this.avatar = data.avatar || 'none.png';
-    this.role = data.role || 1;
+    this.role = typeof data.role === 'object' ? data.role.id : data.role || 1;
 
     this.createdAt = data.createdAt || null;
     this.updatedAt = data.updatedAt || new Date();
@@ -16,7 +17,7 @@ export default class User {
 
   static async validate(data, update = false) {
     const errors = {};
-    const updatableRows = {};
+    let updatableRows = {};
 
     if (update) {
       if (data.email) {
@@ -31,6 +32,7 @@ export default class User {
           }
         }
       }
+
       if (data.username) {
         if (data.username.length < 3 || data.username.length > 16) {
           errors.username =
@@ -46,6 +48,7 @@ export default class User {
           }
         }
       }
+
       if (data.role) {
         if (data.role < 1 || data.role > 2) {
           errors.role = 'Le rôle doit avoir une valeur comprise entre 1 et 2.';
@@ -53,10 +56,20 @@ export default class User {
           updatableRows.role = data.role;
         }
       }
+
+      if (data.password) {
+        if (data.password.length < 8 || data.password.length > 32) {
+          errors.password =
+            'Le mot de passe doit contenir entre 8 et 32 caractères.';
+        } else {
+          updatableRows.password = await bcrypt.hash(data.password, 10);
+        }
+      }
+
       return {
         valid: Object.keys(errors).length === 0,
         errors,
-        updatableRows: updatableRows,
+        updatableRows,
       };
     }
 

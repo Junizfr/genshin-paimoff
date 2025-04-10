@@ -1,4 +1,5 @@
 # Genshin Paimoff
+
 ![Build Status](https://github.com/Junizfr/genshin-paimoff/actions/workflows/ci.yml/badge.svg)
 
 > **Genshin Paimoff** is a full-stack web application for managing Genshin Impact data (characters, weapons, materials) with a Express REST API backend and a vanilla JavaScript frontend.
@@ -77,35 +78,40 @@ yarn start
     │   └── mld.jpg                    # MLD DBDiagram
     └── README.md                      # Documentation
     ```
+
 ## Tasks
+
 | Nom             | Statut                                                |
 | --------------- | ----------------------------------------------------- |
 | **Completed**   | ![Done](https://img.shields.io/badge/DONE-green.svg)  |
 | **Not started** | ![Todo](https://img.shields.io/badge/TODO-red.svg)    |
 | **Pending**     | ![Todo](https://img.shields.io/badge/TODO-orange.svg) |
 
-## ![Todo](https://img.shields.io/badge/TODO-red.svg) Frontend 
+## ![Todo](https://img.shields.io/badge/TODO-red.svg) Frontend
 
 - Serveur Node.js natif qui sert des fichiers statiques (HTML, CSS, JS)
 - Interface utilisateur en HTML et JavaScript vanilla (sans framework)
 - Communication avec l'API backend via Fetch API
 
 ## ![Todo](https://img.shields.io/badge/TODO-red.svg) Backend
+
 - API REST avec une architecture en couches:
-    - Models: définition des entités de la base de données
-    - Repositories: accès aux données
-    - Services: logique métier
-    - Controllers: gestion des requêtes
-    - Routes: définition des endpoints
+  - Models: définition des entités de la base de données
+  - Repositories: accès aux données
+  - Services: logique métier
+  - Controllers: gestion des requêtes
+  - Routes: définition des endpoints
 
 ## ![Todo](https://img.shields.io/badge/TODO-red.svg) Base de données
-- Base de données relationnelle avec:
-    - Relations entre tables
-    - Requêtes avec INNER JOIN
-    - Utilisation de clés étrangères (FOREIGN KEY)
-    - Au moins une relation many-to-many avec clé composite
 
-## ![Todo](https://img.shields.io/badge/TODO-red.svg) Sécurité
+- Base de données relationnelle avec:
+  - Relations entre tables
+  - Requêtes avec INNER JOIN
+  - Utilisation de clés étrangères (FOREIGN KEY)
+  - Au moins une relation many-to-many avec clé composite
+
+## ![Done](https://img.shields.io/badge/DONE-green.svg) Sécurité
+
 - Authentification simple
 - Hachage des mots de passe
 - Protection contre les injections HTML et JavaScript (XSS, CSRF)
