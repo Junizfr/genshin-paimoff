@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genshin-Impact Paimoff | Roles</title>
+    <title>Genshin-Impact Paimoff | Utilisateurs</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
@@ -17,8 +17,8 @@
             </div>
             <div class="nav-links">
                 <a href="/dashboard" class="nav-link">Dashboard</a>
-                <a href="/dashboard/roles" class="nav-link active">Roles</a>
-                <a href="/dashboard/users" class="nav-link">Utilisateurs</a>
+                <a href="/dashboard/roles" class="nav-link">Roles</a>
+                <a href="/dashboard/users" class="nav-link active">Utilisateurs</a>
             </div>
         </div>
     </nav>
@@ -27,9 +27,9 @@
         <div class="container">
 
             <div class="pages-header">
-                <h1>Liste des rôles</h1>
+                <h1>Liste des utilisateurs</h1>
                 <div class="pages-actions">
-                    <button class="btn" id="newRoleButton">Ajouter un rôle</button>
+                    <button class="btn" id="newUserButton">Ajouter un utilisateur</button>
                 </div>
             </div>
             
@@ -39,13 +39,14 @@
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nom</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Email</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="roles-body">
+                <tbody id="users-body">
                     <tr class="table-loader-row">
-                        <td colspan="3">
+                        <td colspan="4">
                             <div class="table-loader-wrapper">
                                 <span class="table-loader"></span>
                             </div>

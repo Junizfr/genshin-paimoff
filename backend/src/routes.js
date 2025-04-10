@@ -13,6 +13,7 @@ router.get('/', pagesController.home);
 router.post('/login', usersController.login);
 
 router.get('/users', usersController.all);
+router.get('/users/:id', usersController.findById);
 router.post('/users', usersController.create);
 router.put('/users/:id', usersController.update);
 router.delete('/users/:id', usersController.delete);

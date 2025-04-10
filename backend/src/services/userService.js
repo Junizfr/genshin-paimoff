@@ -38,26 +38,41 @@ export default {
   },
 
   update: async (userId, userData) => {
-    const user = new User(await userRepository.findById(userId));
+    let user = await userRepository.findById(userId);
+
+    if (!user) {
+      return { error: 'User not found' };
+    }
+
+    user = new User(user);
+
     const { valid, errors, updatableRows } = await User.validate(
       userData,
       true
     );
-    if (!valid) {
-      return { errors: errors };
-    }
 
+    if (!valid) {
+      return { errors };
+    }
     const updateUser = new User({
       id: user.id,
       username: updatableRows.username || user.username,
       email: updatableRows.email || user.email,
       password: updatableRows.password || user.password,
       avatar: updatableRows.avatar || user.avatar,
-      role: updatableRows.role || user.role,
       updatedAt: new Date(),
+      role: updatableRows.role || user.role,
     });
 
     return await userRepository.update(updateUser);
+  },
+
+  findById: async (userId) => {
+    const user = await userRepository.findById(userId);
+    if (!user) {
+      return { error: 'User not found' };
+    }
+    return user;
   },
 
   delete: async (userId) => {

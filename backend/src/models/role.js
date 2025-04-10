@@ -30,12 +30,7 @@ export default class Role {
         }
       }
       if (data.icon) {
-        if (data.icon.length < 3 || data.icon.length > 50) {
-          errors.icon =
-            "L'icône du rôle doit contenir entre 3 et 50 caractères.";
-        } else {
-          updatableRows.icon = data.icon;
-        }
+        updatableRows.icon = data.icon;
       }
       return {
         valid: Object.keys(errors).length === 0,
