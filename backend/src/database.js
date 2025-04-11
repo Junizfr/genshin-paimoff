@@ -50,11 +50,24 @@ export default {
       CREATE INDEX IF NOT EXISTS users_index_email ON users (email);
     `;
 
+    const createElements = `
+    CREATE TABLE IF NOT EXISTS elements (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT UNIQUE NOT NULL,
+      icon TEXT NOT NULL,
+      createdAt DATETIME DEFAULT (datetime('now')),
+      updatedAt DATETIME DEFAULT (datetime('now'))
+    );
+    
+    CREATE INDEX ELEMENTS_index_name ON ELEMENTS (name);
+    `;
+
     try {
       console.log('Initializing database...');
       await connection.run('PRAGMA foreign_keys = ON;');
       await connection.run(createRoles);
       await connection.run(createUsers);
+      await connection.run(createElements);
       console.log('Database initialized.');
     } catch (error) {
       console.error('Error initializing database:', error);

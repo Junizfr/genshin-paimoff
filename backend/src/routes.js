@@ -5,6 +5,7 @@ import authMiddleware from './middlewares/authMiddleware.js';
 import pagesController from './controllers/pagesController.js';
 import usersController from './controllers/usersController.js';
 import rolesController from './controllers/rolesController.js';
+import elementsController from './controllers/elementsController.js';
 
 const router = Router();
 
@@ -23,6 +24,12 @@ router.get('/roles/:id', rolesController.findById);
 router.post('/roles', rolesController.create);
 router.put('/roles/:id', rolesController.update);
 router.delete('/roles/:id', rolesController.delete);
+
+router.get('/elements', elementsController.getAll);
+router.get('/elements/:id', elementsController.findById);
+router.post('/elements', elementsController.create);
+router.put('/elements/:id', elementsController.update);
+router.delete('/elements/:id', elementsController.delete);
 
 router.get('/me', authMiddleware, usersController.me);
 
