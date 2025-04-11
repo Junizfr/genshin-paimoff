@@ -59,7 +59,7 @@ export default {
       updatedAt DATETIME DEFAULT (datetime('now'))
     );
     
-    CREATE INDEX ELEMENTS_index_name ON ELEMENTS (name);
+    CREATE INDEX IF NOT EXISTS ELEMENTS_index_name ON ELEMENTS (name);
     `;
 
     const createCharacters = `
@@ -79,6 +79,19 @@ export default {
     CREATE INDEX IF NOT EXISTS CHARACTERS_index_4 ON CHARACTERS (name);
     `;
 
+    const createUsersCharacters = `
+    CREATE TABLE IF NOT EXISTS users_characters (
+      userId INTEGER NOT NULL,
+      characterId INTEGER NOT NULL,
+      PRIMARY KEY (userId, characterId),
+      FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (characterId) REFERENCES characters(id) ON DELETE CASCADE
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_users_characters_userId ON users_characters (userId);
+    CREATE INDEX IF NOT EXISTS idx_users_characters_characterId ON users_characters (characterId);
+    `;
+
     try {
       console.log('Initializing database...');
       await connection.run('PRAGMA foreign_keys = ON;');
@@ -86,6 +99,7 @@ export default {
       await connection.run(createUsers);
       await connection.run(createElements);
       await connection.run(createCharacters);
+      await connection.run(createUsersCharacters);
       console.log('Database initialized.');
     } catch (error) {
       console.error('Error initializing database:', error);

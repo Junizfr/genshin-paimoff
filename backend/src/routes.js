@@ -7,6 +7,7 @@ import usersController from './controllers/usersController.js';
 import rolesController from './controllers/rolesController.js';
 import elementsController from './controllers/elementsController.js';
 import charactersController from './controllers/charactersController.js';
+import userCharacterController from './controllers/userCharacterController.js';
 
 const router = Router();
 
@@ -37,6 +38,27 @@ router.get('/characters/:id', charactersController.findById);
 router.post('/characters', charactersController.create);
 router.put('/characters/:id', charactersController.update);
 router.delete('/characters/:id', charactersController.delete);
+
+router.get(
+  '/users-characters/all',
+  authMiddleware,
+  userCharacterController.getAll
+);
+router.post(
+  '/users-characters/assign',
+  authMiddleware,
+  userCharacterController.assignCharacterToUser
+);
+router.delete(
+  '/users-characters/remove/:characterId',
+  authMiddleware,
+  userCharacterController.removeCharacterFromUser
+);
+router.get(
+  '/users-characters',
+  authMiddleware,
+  userCharacterController.findByUserId
+);
 
 router.get('/me', authMiddleware, usersController.me);
 
