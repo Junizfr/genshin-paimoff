@@ -6,6 +6,7 @@ import pagesController from './controllers/pagesController.js';
 import usersController from './controllers/usersController.js';
 import rolesController from './controllers/rolesController.js';
 import elementsController from './controllers/elementsController.js';
+import charactersController from './controllers/charactersController.js';
 
 const router = Router();
 
@@ -30,6 +31,12 @@ router.get('/elements/:id', elementsController.findById);
 router.post('/elements', elementsController.create);
 router.put('/elements/:id', elementsController.update);
 router.delete('/elements/:id', elementsController.delete);
+
+router.get('/characters', charactersController.getAll);
+router.get('/characters/:id', charactersController.findById);
+router.post('/characters', charactersController.create);
+router.put('/characters/:id', charactersController.update);
+router.delete('/characters/:id', charactersController.delete);
 
 router.get('/me', authMiddleware, usersController.me);
 
